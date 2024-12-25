@@ -1,0 +1,99 @@
+.genContainer1 {
+  display: flex;
+  flex-direction: row;
+}
+
+.genContainer {
+    display: flex;
+    flex-direction: row; /* Arrange title, body, and footer vertically */
+    width: 750px;
+    padding: 20px;
+    height: 450px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #f8c4c5, #f79d84); /* Gradient background */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    float: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  }
+  
+.title1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #3383dd; /* Vibrant blue */
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Body styling */
+  .body1 {
+    font-size: 16px;
+    color: #333; /* Dark gray */
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Footer styling */
+  .footer1 {
+    font-size: 20px;
+    color: #6a1b9a; /* Deep purple */
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  .left {
+    float: left;
+    width: 100%;
+    background: linear-gradient(135deg, #f8c4c5, #f79d84);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .right {
+    float: right;
+    width: 100%;
+    background: linear-gradient(135deg, #f8c4c5, #f79d84);
+    margin: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  .listOfComments {
+    width: 100%;
+    height: 70%;
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .listItems {
+    margin: 10px;
+    height: 40%;
+    background: linear-gradient(135deg, #f8c4c5, #f79d84);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .listItems:hover {
+    background: #3383dd;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+  }
