@@ -60,14 +60,35 @@ const loginHandler = async (req, res) => {
         }
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-        res.json({ success: true, token: token, username: username, id: user.id });
+        res.json({ success: true, token: token, username: username, id: user._id });
 
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
+// desc: get user basic info
+// route: GET /info
+// access public methods
+
+const getUserDetails = async (req, res) => {
+    try {
+        const id = req.params.id; // Fetch user by `id`
+        const user = await User.findById(id).select('-password'); // Exclude the `id` field from the response
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        res.status(200).json({ message: 'User fetched successfully', user });
+    } catch (error) {
+        console.error(error); // Log the error for debugging
+        res.status(500).json({ message: "Internal server error", error });
+    }
+};
+
 module.exports = {
     signupHandler,
-    loginHandler
+    loginHandler,
+    getUserDetails
 };

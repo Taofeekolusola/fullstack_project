@@ -15,7 +15,7 @@ function Post() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        if (!authState.status) {
+        if (!localStorage.getItem("token")) {
           navigate("/login");
         } else {
           // Fetch data
@@ -95,11 +95,69 @@ function Post() {
             });
     };
 
+    const editPost = (option) => {
+        if (option !== "body") {
+            let newTitle = prompt("Enter a new Title");
+            axios
+                .put(
+                    "http://localhost:3002/posts/title",
+                    { title: newTitle, id: id },
+                    {
+                        headers: {
+                            token: localStorage.getItem("token"),
+                        },
+                    }
+                )
+                .then((res) => {
+                    if (res.data.error) {
+                        alert(res.data.error);
+                    } else {
+                        // Update the post state with the new title
+                        setPost((prev) => ({ ...prev, title: newTitle }));
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating title:", error);
+                    alert("An error occurred while updating the title.");
+                });
+        } else {
+            let newPost = prompt("Enter a new Post");
+            axios
+                .put(
+                    "http://localhost:3002/posts/text",
+                    { content: newPost, id: id },
+                    {
+                        headers: {
+                            token: localStorage.getItem("token"),
+                        },
+                    }
+                )
+                .then((res) => {
+                    if (res.data.error) {
+                        alert(res.data.error);
+                    } else {
+                        // Update the post state with the new content
+                        setPost((prev) => ({ ...prev, content: newPost }));
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error updating post content:", error);
+                    alert("An error occurred while updating the post.");
+                });
+        }
+    };
+    
     return (
         <div className='genContainer'>
             <div className='left'>
-                <div className="title1">{post.title}</div>
-                <div className="body1">{post.content}</div>
+                <div onClick={() => {
+                    if (authState.username === post.username) {
+                        editPost("title")
+                    }
+                }} className="title1">{post.title}</div>
+                <div onClick={() => { if (authState.username === post.username) {
+                        editPost("body")
+                    } }} className="body1">{post.content}</div>
                 <div className="footer1">Posted by: {post.username}</div>
             </div>
             <div className='right'>

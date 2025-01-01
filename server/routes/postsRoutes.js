@@ -5,7 +5,8 @@ const {
     createPostsHandler,
     getAllPostsHandler,
     getSinglePostHandler,
-    updatePostHandler,
+    updatePostTitleHandler,
+    updatePostTextHandler,
     deletePostHandler,
 } = require('../controllers/postController');
 
@@ -13,8 +14,9 @@ const {
 route.post('/',  createPostsHandler)
 route.get('/get', getAllPostsHandler)
 route.get('/get/:id', getSinglePostHandler)
-route.put('/update/:id', updatePostHandler)
+route.put('/title', validation, updatePostTitleHandler)
 route.delete('/del/:id', validation, deletePostHandler)
+route.put('/text', validation, updatePostTextHandler)
 
 
 module.exports = route;

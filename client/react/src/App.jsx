@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import { AuthContext } from "./pages/helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Profile from './pages/Profile'
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -74,6 +75,7 @@ function App() {
             <Route path="/post/:id" element={<Post />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/profile/:id" element={<Profile />} />
           </Routes>
         </Router>
       </AuthContext.Provider>

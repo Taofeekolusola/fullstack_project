@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './helpers/AuthContext';
 
 function CreatePosts() {
-    const { authState } = useContext(AuthContext);
+    const { authState } = useContext(AuthContext); // Access user data from context
     const navigate = useNavigate();
 
     const initialValues = {
@@ -17,7 +17,7 @@ function CreatePosts() {
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
-            navigate('/login');
+            navigate('/login'); // Redirect to login if no token found
         }
     }, [authState.status, navigate]);
 
@@ -27,6 +27,7 @@ function CreatePosts() {
             username: authState.username, // Automatically include the logged-in user's username
         };
 
+        // Send post data to backend with userId
         axios.post("http://localhost:3002/posts", postData, {
             headers: { token: localStorage.getItem("token") },
         }).then((res) => {
