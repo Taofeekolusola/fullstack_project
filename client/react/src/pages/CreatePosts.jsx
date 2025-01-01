@@ -1,53 +1,71 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik'
-import './Createpost.css'
-import * as Yup from 'yup'
-import axios from "axios"
-import { useState } from "react"
-import {useNavigate} from'react-router-dom'
+import React, { useContext, useEffect } from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import './Createpost.css';
+import * as Yup from 'yup';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './helpers/AuthContext';
 
 function CreatePosts() {
-    const [posts, setPosts] = useState([])
-    let navigate = useNavigate() // useHistory hook to handle navigation
+    const { authState } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const initialValues = {
         title: '',
         content: '',
-        username: ''
-    }
+    };
+
+    useEffect(() => {
+        if (!localStorage.getItem("token")) {
+            navigate('/login');
+        }
+    }, [authState.status, navigate]);
+
     const onSubmit = (data) => {
-        axios.post("http://localhost:3001/posts", data).then((res) => { 
-            setPosts(res.data);
-          })
-    }
+        const postData = {
+            ...data,
+            username: authState.username, // Automatically include the logged-in user's username
+        };
+
+        axios.post("http://localhost:3002/posts", postData, {
+            headers: { token: localStorage.getItem("token") },
+        }).then((res) => {
+            navigate("/"); // Redirect to home after successful creation
+        }).catch((err) => {
+            console.error("Error creating post:", err);
+        });
+    };
+
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         content: Yup.string().required('Content is required'),
-        username: Yup.string().min(3).max(15).required('Name is required')
     });
 
     return (
         <div className="createPostPage">
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
+            >
                 <Form className='form'>
                     <ErrorMessage name="title" component="span" className="error" />
                     <label>Title: </label>
                     <Field
                         id="title"
                         name="title"
-                        placeholder="(Ex. Title....)" />
+                        placeholder="(Ex. Title....)" 
+                    />
+                    
                     <ErrorMessage name="content" component="span" className="error" />
                     <label>Content: </label>
                     <Field
                         id="content"
                         name="content"
-                        placeholder="(Ex. ....)" />
-                    <ErrorMessage name="username" component="span" className="error" />
-                    <label>Name: </label>
-                    <Field
-                        id="username"
-                        name="username"
-                        placeholder="(Ex. Taofeek....)" />
-                    <button onClick={() => navigate("/")} type="submit">Create Post</button>
+                        placeholder="(Ex. ....)" 
+                    />
+                    
+                    <button className='submit' type="submit">Create Post</button>
                 </Form>
             </Formik>
         </div>

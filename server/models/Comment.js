@@ -11,6 +11,10 @@ const comment = new mongoose.Schema(
       ref: 'Post', // Reference the Post model
       required: true,
     },
+    username: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields

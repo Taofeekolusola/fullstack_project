@@ -1,0 +1,25 @@
+.like {
+    background: rgb(60, 60, 238);
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    margin-left: 7.3%;
+    height: 24px;
+    margin-right: 2px;
+}
+.footer span {
+    float: left;
+    color: white;
+}
+
+.delete1 {
+    background: rgb(60, 60, 238);
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    margin-right: 20%;
+    height: 22px;
+}

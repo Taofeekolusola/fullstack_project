@@ -1,12 +1,7 @@
-.genContainer1 {
-  display: flex;
-  flex-direction: row;
-}
-
 .genContainer {
     display: flex;
     flex-direction: row; /* Arrange title, body, and footer vertically */
-    width: 750px;
+    width: 90%;
     padding: 20px;
     height: 450px;
     margin-bottom: 10px;
@@ -82,11 +77,13 @@
   }
   .listItems {
     margin: 10px;
-    height: 40%;
+    height: 60%;
+    width: 40%;
     background: linear-gradient(135deg, #f8c4c5, #f79d84);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     color: white;
     border-radius: 10px;
     padding: 10px;
@@ -96,4 +93,35 @@
     background: #3383dd;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
     transform: translateY(-3px);
+  }
+
+  .username {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 30px;
+  }
+
+  .addComment {
+    background: #4a90e2; /* Vibrant blue */
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .delete {
+    background: #4a90e2; /* Vibrant blue */
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    height: 1.5%px;
   }

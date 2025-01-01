@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const Post = require('../models/Posts');
+const mongoose = require('mongoose');
 
 // desc add comment to a post
 // route: POST comment/posts
@@ -8,6 +9,8 @@ const Post = require('../models/Posts');
 const addCommentHandler = async (req, res) => {
   try {
     const { comment, postId } = req.body;
+    const username = req.user.username;
+    comment.username = username
 
     if (!comment || !postId) {
       return res.status(400).json({ error: 'Please provide all required fields' });
@@ -19,7 +22,7 @@ const addCommentHandler = async (req, res) => {
       return res.status(404).json({ error: 'Post not found' });
     }
 
-    const newComment = new Comment({ comment, postId });
+    const newComment = new Comment({ comment, postId, username});
     await newComment.save();
 
     res.status(201).json(newComment);
@@ -78,24 +81,34 @@ const updateCommentHandler = async (req, res) => {
 // acc: private
 
 const deleteCommentHandler = async (req, res) => {
+  const { id } = req.params;
+
+  // Function to validate ObjectId
+  function isValidObjectId(id) {
+    return mongoose.Types.ObjectId.isValid(id);
+  }
+
+  // Validate if the provided ID is valid
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ error: 'Invalid or missing ID' });
+  }
+
   try {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(400).json({ error: 'Please provide a comment ID' });
-    }
-
+    // Attempt to delete the comment by its ID
     const deletedComment = await Comment.findByIdAndDelete(id);
 
     if (!deletedComment) {
       return res.status(404).json({ error: 'Comment not found' });
     }
 
-    res.json('comment deleted successfully');
+    // Send success response after deletion
+    res.json({ message: 'Comment deleted successfully' });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
 };
+
 
 module.exports = {
     addCommentHandler,

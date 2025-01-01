@@ -82,9 +82,9 @@ nav a:active {
     flex-direction: column; /* Arrange title, body, and footer vertically */
     align-items: center; /* Center content horizontally */
     width: 250px;
-    padding: 20px;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    padding: 10px;
+    padding-top: 0px;
+    margin-top: 15px;
     background: linear-gradient(135deg, #f8c4c5, #f79d84); /* Gradient background */
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -124,5 +124,43 @@ nav a:active {
     font-size: 14px;
     color: #6a1b9a; /* Deep purple */
     font-style: italic;
+    margin-top: 0;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+    padding-bottom: 0px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+  }
+
+  .user {
+    font-size: 14px;
+    color: #6a1b9a; /* Deep purple */
+    font-style: italic;
     margin-top: 10px;
+    text-align: right; /* Align user info to the right */
+  }
+
+  .user, .logout {
+    display: flex;
+    justify-content: flex-end;
+    
+  }
+  .logout {
+    width: 68%;
+  }
+
+  .logout button {
+    background: #4a90e2; /* Vibrant blue */
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    height: 1.5%px;
   }

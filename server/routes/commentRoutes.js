@@ -1,5 +1,6 @@
 const express = require('express');
 const route = express.Router();
+const { validation } = require('../middleware/auth');
 const {
     addCommentHandler,
     getCommentsHandler,
@@ -8,10 +9,10 @@ const {
 } = require('../controllers/commentController');
 
 
-route.post('/add', addCommentHandler)
+route.post('/add', validation, addCommentHandler)
 route.get('/get/:id', getCommentsHandler)
 route.put('/update/:id', updateCommentHandler)
-route.delete('/del/:id', deleteCommentHandler)
+route.delete('/del/:id', validation, deleteCommentHandler)
 
 
 module.exports = route;

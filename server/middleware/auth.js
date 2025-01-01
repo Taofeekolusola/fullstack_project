@@ -1,43 +1,25 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/Users')
 require('dotenv').config();
 
 
 
 const validation = async (req, res, next) => {
-    try {
-        if (!req.headers.authorization) {
-            return res.status(401).json({ 
-                message: 'Authorization header is required'
-            });
-        }
+    const token = req.header("token")
 
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            return res.status(401).json({ 
-                message: 'Token is required'
-            });
+    if (!token) {
+        return res.status(401).json({ error: 'Access denied. No token provided.' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;  // Add user info to request object to be used in other routes or middleware
+        
+        if (decoded) {
+            return next()
         }
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
-        if (!payload) {
-            return res.status(401).json({ 
-                message: 'Invalid token'
-            });
-        }
-        const user = await User.findByPk(payload.id);
-        if (!user) {
-            return res.status(401).json({ 
-                message: 'Unauthorized'
-            });
-        }
-        req.user = user;
-        next();
-    
-} catch (error) {
-    res.status(500).json({ 
-        message: error.message
-    })
-}
+    } catch (error) {
+        return res.status(401).json({ error: 'Access denied. Invalid token.' });
+    }
 }
 
 module.exports = {validation};

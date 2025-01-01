@@ -56,11 +56,11 @@ const loginHandler = async (req, res) => {
 
         const payload = {
             id: user._id,
-            email: user.username,
+            username: user.username,
         }
-        const token = jwt.sign({payload}, process.env.JWT_SECRET, { expiresIn: '7d' });
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
 
-        res.json({ message: 'Login successful', token });
+        res.json({ success: true, token: token, username: username, id: user.id });
 
     } catch (error) {
         res.status(500).json({ error: error.message });
