@@ -54,12 +54,6 @@ nav a {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
-/* Hover effect on links */
-nav a:hover {
-  background-color: #4a90e2; /* Blue background on hover */
-  transform: translateY(-3px); /* Slight lift effect */
-}
-
 /* Active link styling */
 nav a:active {
   background-color: #3b7dc4; /* Darker blue on click */
@@ -185,9 +179,46 @@ nav a:active {
 
     nav a {
       width: 50%;
+      margin-right: 0;
+      padding-right: 0;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      margin: 5px;
+    }
+
+    nav a:hover {
+      background-color: ""; 
+    }
+  }
+
+  @media (max-width: 568px) {
+    .user, .logout {
+      display: flex;
+      justify-content: flex-end;
+      
+    }
+    .logout {
+      width: 30%;
     }
 
     .container {
-      height: 50%;
+      width: 150px;
     }
+
+    nav {
+      gap: 5px;
+    }
+
+    nav a {
+      width: 50%;
+      margin-right: 0;
+      padding-right: 0;
+      font-size: 17px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      margin: 5px;
+    } 
   }
