@@ -150,7 +150,7 @@ nav a:active {
     
   }
   .logout {
-    width: 68%;
+    width: 50%;
   }
 
   .logout button {
@@ -163,4 +163,31 @@ nav a:active {
     cursor: pointer;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     height: 1.5%px;
+  }
+
+  @media (max-width: 768px) {
+    .user, .logout {
+      display: flex;
+      justify-content: flex-end;
+      
+    }
+    .logout {
+      width: 30%;
+    }
+
+    .container {
+      width: 150px;
+    }
+
+    nav {
+      gap: 5px;
+    }
+
+    nav a {
+      width: 50%;
+    }
+
+    .container {
+      height: 50%;
+    }
   }

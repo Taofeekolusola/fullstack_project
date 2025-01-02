@@ -75,7 +75,7 @@ const getUserDetails = async (req, res) => {
     try {
         const id = req.params.id; // Fetch user by `id`
         const user = await User.findById(id).select('-password'); // Exclude the `id` field from the response
-        
+               
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -87,8 +87,55 @@ const getUserDetails = async (req, res) => {
     }
 };
 
+// desc: update user password
+// route: PUT /info
+// access public methods
+
+const updatePassword = async (req, res) => {
+  try {
+      let { oldPassword, newPassword, username } = req.body;
+      username = req.user.username;
+
+    // Validate inputs
+    if (!username || !oldPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ error: "Username, old password, and new password are required." });
+    }
+
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    // Compare old password
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Old password is incorrect." });
+    }
+
+    // Ensure the new password is not the same as the old password
+    const isNewPasswordSame = await bcrypt.compare(newPassword, user.password);
+    if (isNewPasswordSame) {
+      return res.status(400).json({ error: "New password cannot be the same as the old password." });
+    }
+
+    // Hash and update the password
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully." });
+  } catch (error) {
+    console.error("Error updating password:", error.message);
+    res.status(500).json({ error: "Internal server error." });
+  }
+};
+
+  
 module.exports = {
     signupHandler,
     loginHandler,
-    getUserDetails
+    getUserDetails,
+    updatePassword
 };

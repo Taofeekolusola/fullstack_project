@@ -126,7 +126,7 @@ function Home() {
       X
     </button>
   )}
-  Posted by: {post.username}
+  {post.username}
   <div onClick={() => likeAPost(post._id)} className="like">
     {likedPosts.includes(post._id) ? <ThumbUpAltIcon /> : <ThumbDownAltIcon />}
   </div>
